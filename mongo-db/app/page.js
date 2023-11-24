@@ -1,29 +1,32 @@
-import { userModel } from "./model/user"
-import dbConnect from "./config/db"
-import { data } from "autoprefixer"
+import dbConnect from '@/config/db'
+import { userModel } from '@/model/users'
+import Image from 'next/image'
 dbConnect()
-const fetchData= async()=>{
+const fetchData =async ()=>{
   try {
-    const data =await userModel.find()
-    console.log(data);
+    const data=await userModel.find()
+    console.log("data",data);
     return data
   } catch (error) {
     console.log("error",error);
   }
 }
  async function Home() {
-  const data=fetchData()
+  const data=await fetchData()
   return (
-    <>
-<h1>Home page</h1>
-{
-  (await data)?.map((item)=>{
-    return(
-      <h1>{item.firstName}</h1>
-    )
-  })
-}
-    </>
+  <>
+  {
+    data?.map((item,index)=>{
+      return (
+        <div key={index}>
+          <h1>{item.firstName}</h1>
+          <h1>{item.lastName}</h1>
+          <h1>{item.email}</h1>
+        </div>
+      )
+    })
+  }
+  </>
   )
 }
 export default Home
