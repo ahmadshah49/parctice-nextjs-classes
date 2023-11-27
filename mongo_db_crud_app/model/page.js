@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 const {Schema}=mongoose;
 const userScehma= new Schema({
-    name:{type:String},
-    email:{type:String},
-    phone:{type:String},
-})
+    title:{type:String},
+    description:{type:String}
+},{timestamps:true}
+)
 export const userModel=mongoose.models?.data || mongoose.model("data",userScehma);
