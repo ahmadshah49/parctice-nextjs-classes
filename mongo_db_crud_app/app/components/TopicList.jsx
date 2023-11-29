@@ -25,7 +25,7 @@ const {topics}=await getTopics()
 <p>{t.description}</p>
       </div>
       <div className='flex gap-3'>
-<RemoveBtn/>
+<RemoveBtn id={t._id}/>
 <Link href={`/editTopic/${t._id}`}><HiPencilAlt size={24}/></Link>
       </div>
     </div>
