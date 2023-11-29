@@ -2,7 +2,7 @@ import TopicList from "./components/TopicList"
 
 const page = () => {
   return (
-    <div>
+    <div className="h-full">
       <TopicList/>
       
       
