@@ -1,6 +1,51 @@
-import React from "react";
+"use client";
+import { useState } from "react";
 
 const CreateBill = ({ isOpen, onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [location, setLocation] = useState("");
+  const [hobby, setHobby] = useState("");
+  const submitHandler = () => {
+    try {
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        name: name,
+        email: email,
+        phone: parseInt(phone),
+        location: location,
+        hobby: hobby,
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch("http://localhost:3000/api/data", requestOptions);
+      alert("data Created");
+    } catch (error) {
+      console.log("error", error);
+    }
+    if (!name || !email || !phone || !location || !hobby) {
+      alert("please fill all values");
+      return;
+    }
+    {
+      console.log(name, email, phone, location, hobby);
+    }
+
+    setName("");
+    setEmail("");
+    setPhone("");
+    setLocation("");
+    setHobby("");
+  };
   return (
     <div
       className={`${
@@ -18,6 +63,8 @@ const CreateBill = ({ isOpen, onClose }) => {
           type="text"
           name="name"
           placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="py-3 mx-10 border rounded-md border-black outline-none px-2"
         />
         <br />
@@ -26,6 +73,8 @@ const CreateBill = ({ isOpen, onClose }) => {
           type="email"
           name="id"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="py-3 mx-10 border rounded-md border-black outline-none px-2"
         />
         <br />
@@ -34,6 +83,8 @@ const CreateBill = ({ isOpen, onClose }) => {
           type="number"
           name="phone"
           placeholder="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="py-3 mx-10 border rounded-md border-black outline-none px-2"
         />
         <br />
@@ -42,6 +93,8 @@ const CreateBill = ({ isOpen, onClose }) => {
           type="text"
           name="location"
           placeholder="Location"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
           className="py-3 mx-10 border rounded-md border-black outline-none px-2"
         />
         <br />
@@ -50,11 +103,19 @@ const CreateBill = ({ isOpen, onClose }) => {
           type="text"
           name="hobby"
           placeholder="Hobby"
+          value={hobby}
+          onChange={(e) => setHobby(e.target.value)}
           className="py-3 mx-10 border rounded-md border-black outline-none px-2"
         />
         <br />
         <div className="flex items-center justify-center gap-4">
-          <button className="bg-gray-200 py-2 px-4 rounded-md font-semibold text-green-600">
+          <button
+            onClick={() => {
+              submitHandler();
+              onClose();
+            }}
+            className="bg-gray-200 py-2 px-4 rounded-md font-semibold text-green-600"
+          >
             Create
           </button>
           <button
